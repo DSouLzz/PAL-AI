@@ -1,0 +1,44 @@
+{
+  "ollama_url": "http://localhost:11434",
+  "model": "gemma3:4b",
+  "vision_model": "gemma3:4b",
+  "language": "en",
+  "voice_enabled": true,
+  "stt_model": "small",
+  "stt_device": "cpu",
+  "stt_compute_type": "int8",
+  "record_seconds": 6,
+  "max_history_messages": 12,
+  "knowledge_results": 5,
+  "auto_memory_every_turns": 4,
+  "palworld_server_api": {
+    "enabled": false,
+    "base_url": "http://localhost:8212/v1/api",
+    "username": "",
+    "password": ""
+  },
+  "ptt_enabled": true,
+  "ptt_key": "j",
+  "ptt_min_seconds": 0.25,
+  "voice_screen_commands": true,
+  "screen_command_phrases": [
+    "analyze my screen",
+    "analyse my screen",
+    "look at my screen",
+    "look at this",
+    "what am i looking at",
+    "what do you see",
+    "check my screen",
+    "check the screen",
+    "scan my screen",
+    "analyze the screen",
+    "analyse the screen"
+  ],
+  "app_version": "0.7",
+  "updater": {
+    "enabled": true,
+    "github_repo": "DSouLzz/PAL-AI",
+    "auto_check_on_start": true,
+    "auto_apply": false
+  }
+}
