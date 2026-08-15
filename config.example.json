@@ -34,7 +34,7 @@
     "analyze the screen",
     "analyse the screen"
   ],
-  "app_version": "0.8.2",
+  "app_version": "0.8.3",
   "updater": {
     "enabled": true,
     "github_repo": "DSouLzz/PAL-AI",
@@ -52,5 +52,12 @@
     "always_on_top": true,
     "auto_open_on_new_pin": true,
     "show_grid": true
+  },
+  "gaming_performance": {
+    "enabled": true,
+    "unload_model_after_response": true,
+    "context_size": 2048,
+    "disable_auto_memory_while_gaming": true,
+    "max_history_messages": 8
   }
 }
