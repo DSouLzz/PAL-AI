@@ -34,7 +34,7 @@
     "analyze the screen",
     "analyse the screen"
   ],
-  "app_version": "0.8",
+  "app_version": "0.8.2",
   "updater": {
     "enabled": true,
     "github_repo": "DSouLzz/PAL-AI",
@@ -46,10 +46,11 @@
   "tts_volume": 100,
   "map_overlay": {
     "enabled": true,
-    "width": 620,
-    "height": 620,
-    "opacity": 0.92,
+    "width": 1180,
+    "height": 760,
+    "opacity": 0.98,
     "always_on_top": true,
-    "auto_open_on_new_pin": true
+    "auto_open_on_new_pin": true,
+    "show_grid": true
   }
 }
