@@ -34,7 +34,7 @@
     "analyze the screen",
     "analyse the screen"
   ],
-  "app_version": "0.7.2",
+  "app_version": "0.8",
   "updater": {
     "enabled": true,
     "github_repo": "DSouLzz/PAL-AI",
@@ -43,5 +43,13 @@
   },
   "tts_engine": "windows_sapi",
   "tts_rate": 1,
-  "tts_volume": 100
+  "tts_volume": 100,
+  "map_overlay": {
+    "enabled": true,
+    "width": 620,
+    "height": 620,
+    "opacity": 0.92,
+    "always_on_top": true,
+    "auto_open_on_new_pin": true
+  }
 }
