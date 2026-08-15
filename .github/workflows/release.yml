@@ -28,7 +28,7 @@ jobs:
           VERSION="${{ steps.version.outputs.version }}"
           STAGE="PAL-AI-v${VERSION}"
           mkdir "$STAGE"
-          cp pal_ai.py updater.py requirements.txt install.bat start.bat apply_update.bat VERSION README.md TROUBLESHOOTING.md config.example.json "$STAGE"/
+          cp pal_ai.py launcher.py voice_fix.py updater.py requirements.txt install.bat start.bat apply_update.bat VERSION README.md TROUBLESHOOTING.md config.example.json "$STAGE"/
           mkdir -p "$STAGE/knowledge"
           cp knowledge/PALWORLD_NOTES.md "$STAGE/knowledge/"
           cp config.example.json "$STAGE/config.json"
