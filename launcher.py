@@ -11,6 +11,7 @@ from performance_patch import apply_performance_patch
 from online_research import apply_online_research
 from activity_indicator import apply_activity_indicator
 from map_pin_fix import apply_map_pin_fix
+from map_calibration import apply_map_calibration
 
 # Apply runtime patches before the app starts.
 pal_ai.Voice.speak = reliable_speak
@@ -20,6 +21,7 @@ apply_performance_patch(pal_ai)
 apply_online_research(pal_ai)
 apply_activity_indicator(pal_ai)
 apply_map_pin_fix(pal_ai)
+apply_map_calibration(pal_ai)
 
 
 def safe_check_updates(self, silent=False):
