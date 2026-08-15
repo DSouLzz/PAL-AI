@@ -46,15 +46,7 @@ jobs:
           cp knowledge/PALWORLD_NOTES.md "$STAGE/knowledge/"
           cp config.example.json "$STAGE/config.json"
           printf '%s\n' "$VERSION" > "$STAGE/VERSION"
-          python - "$STAGE/config.json" "$VERSION" <<'PY'
-import json, sys
-path, version = sys.argv[1], sys.argv[2]
-with open(path, encoding='utf-8') as f:
-    cfg = json.load(f)
-cfg['app_version'] = version
-with open(path, 'w', encoding='utf-8') as f:
-    json.dump(cfg, f, indent=2, ensure_ascii=False)
-PY
+          python -c 'import json,sys; p=sys.argv[1]; v=sys.argv[2]; c=json.load(open(p,encoding="utf-8")); c["app_version"]=v; json.dump(c,open(p,"w",encoding="utf-8"),indent=2,ensure_ascii=False)' "$STAGE/config.json" "$VERSION"
           zip -r "PAL-AI-v${VERSION}.zip" "$STAGE"
           sha256sum "PAL-AI-v${VERSION}.zip" > "PAL-AI-v${VERSION}.zip.sha256"
 
