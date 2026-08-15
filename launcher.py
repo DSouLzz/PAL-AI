@@ -8,12 +8,14 @@ from voice_fix import reliable_speak
 from map_overlay import apply_map_overlay
 from map_precision import apply_map_precision
 from performance_patch import apply_performance_patch
+from online_research import apply_online_research
 
 # Apply runtime patches before the app starts.
 pal_ai.Voice.speak = reliable_speak
 apply_map_overlay(pal_ai)
 apply_map_precision(pal_ai)
 apply_performance_patch(pal_ai)
+apply_online_research(pal_ai)
 
 
 def safe_check_updates(self, silent=False):
