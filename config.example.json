@@ -34,11 +34,14 @@
     "analyze the screen",
     "analyse the screen"
   ],
-  "app_version": "0.7",
+  "app_version": "0.7.1",
   "updater": {
     "enabled": true,
     "github_repo": "DSouLzz/PAL-AI",
     "auto_check_on_start": true,
     "auto_apply": false
-  }
+  },
+  "tts_engine": "windows_sapi",
+  "tts_rate": 1,
+  "tts_volume": 100
 }
