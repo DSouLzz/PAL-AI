@@ -13,6 +13,7 @@ from activity_indicator import apply_activity_indicator
 from map_pin_fix import apply_map_pin_fix
 from map_calibration import apply_map_calibration
 from ingame_map_capture import apply_ingame_map_capture
+from detailed_map_background import apply_detailed_map_background
 
 # Apply runtime patches before the app starts.
 pal_ai.Voice.speak = reliable_speak
@@ -24,6 +25,7 @@ apply_activity_indicator(pal_ai)
 apply_map_pin_fix(pal_ai)
 apply_map_calibration(pal_ai)
 apply_ingame_map_capture(pal_ai)
+apply_detailed_map_background(pal_ai)
 
 
 def safe_check_updates(self, silent=False):
