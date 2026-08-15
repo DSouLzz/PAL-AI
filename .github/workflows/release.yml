@@ -1,0 +1,48 @@
+name: Build and publish PAL-AI
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read version
+        id: version
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build release ZIP
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          STAGE="PAL-AI-v${VERSION}"
+          mkdir "$STAGE"
+          cp pal_ai.py updater.py requirements.txt install.bat start.bat apply_update.bat VERSION README.md TROUBLESHOOTING.md config.example.json "$STAGE"/
+          mkdir -p "$STAGE/knowledge"
+          cp knowledge/PALWORLD_NOTES.md "$STAGE/knowledge/"
+          cp config.example.json "$STAGE/config.json"
+          zip -r "PAL-AI-v${VERSION}.zip" "$STAGE"
+          sha256sum "PAL-AI-v${VERSION}.zip" > "PAL-AI-v${VERSION}.zip.sha256"
+
+      - name: Publish GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          gh release create "$GITHUB_REF_NAME" \
+            "PAL-AI-v${VERSION}.zip" \
+            "PAL-AI-v${VERSION}.zip.sha256" \
+            --title "PAL-AI v${VERSION}" \
+            --generate-notes
