@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to build, e.g. 0.8"
+        description: "Version to build, e.g. 0.8.3"
         required: true
-        default: "0.8"
+        default: "0.8.3"
 
 permissions:
   contents: write
@@ -41,7 +41,7 @@ jobs:
           VERSION="${{ steps.version.outputs.version }}"
           STAGE="PAL-AI-v${VERSION}"
           mkdir "$STAGE"
-          cp pal_ai.py launcher.py voice_fix.py map_overlay.py updater.py requirements.txt install.bat start.bat debug_start.bat apply_update.bat VERSION README.md TROUBLESHOOTING.md config.example.json "$STAGE"/
+          cp pal_ai.py launcher.py voice_fix.py map_overlay.py performance_patch.py updater.py requirements.txt install.bat start.bat debug_start.bat apply_update.bat VERSION README.md TROUBLESHOOTING.md config.example.json "$STAGE"/
           mkdir -p "$STAGE/knowledge"
           cp knowledge/PALWORLD_NOTES.md "$STAGE/knowledge/"
           cp config.example.json "$STAGE/config.json"
