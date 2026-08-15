@@ -1,0 +1,15 @@
+# Local runtime data
+.venv/
+data/
+screenshots/
+config.json
+__pycache__/
+*.pyc
+last_voice.wav
+last_ptt.wav
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
