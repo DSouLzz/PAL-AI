@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to build, e.g. 0.7.1"
+        required: true
+        default: "0.7.1"
 
 permissions:
   contents: write
@@ -19,8 +25,15 @@ jobs:
         id: version
         shell: bash
         run: |
-          VERSION="${GITHUB_REF_NAME#v}"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ inputs.version }}"
+            TAG="v${VERSION}"
+          else
+            TAG="$GITHUB_REF_NAME"
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
 
       - name: Build release ZIP
         shell: bash
@@ -35,14 +48,20 @@ jobs:
           zip -r "PAL-AI-v${VERSION}.zip" "$STAGE"
           sha256sum "PAL-AI-v${VERSION}.zip" > "PAL-AI-v${VERSION}.zip.sha256"
 
-      - name: Publish GitHub Release
+      - name: Create or update GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          gh release create "$GITHUB_REF_NAME" \
-            "PAL-AI-v${VERSION}.zip" \
-            "PAL-AI-v${VERSION}.zip.sha256" \
-            --title "PAL-AI v${VERSION}" \
-            --generate-notes
+          TAG="${{ steps.version.outputs.tag }}"
+          ZIP="PAL-AI-v${VERSION}.zip"
+          SHA="PAL-AI-v${VERSION}.zip.sha256"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP" "$SHA" --clobber
+          else
+            gh release create "$TAG" "$ZIP" "$SHA" \
+              --title "PAL-AI v${VERSION}" \
+              --generate-notes
+          fi
