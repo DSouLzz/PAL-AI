@@ -5,18 +5,15 @@ from tkinter import messagebox
 import pal_ai
 import updater
 from voice_fix import reliable_speak
+from map_overlay import apply_map_overlay
 
-# Apply the reliable Windows voice implementation before the app starts.
+# Apply runtime patches before the app starts.
 pal_ai.Voice.speak = reliable_speak
+apply_map_overlay(pal_ai)
 
 
 def safe_check_updates(self, silent=False):
-    """Python 3.14-safe update checker.
-
-    Exception variables from an except block are cleared when that block exits.
-    Therefore any Tkinter callback scheduled for later must capture plain text now,
-    rather than closing over `e`.
-    """
+    """Python 3.14-safe update checker."""
     def worker():
         try:
             result = updater.check_for_update()
@@ -79,7 +76,6 @@ def safe_check_updates(self, silent=False):
     threading.Thread(target=worker, daemon=True).start()
 
 
-# Patch the buggy v0.7 checker without rewriting the user's whole app file.
 pal_ai.App.check_updates = safe_check_updates
 
 
