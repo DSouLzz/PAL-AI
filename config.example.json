@@ -34,7 +34,7 @@
     "analyze the screen",
     "analyse the screen"
   ],
-  "app_version": "0.8.3",
+  "app_version": "0.8.4",
   "updater": {
     "enabled": true,
     "github_repo": "DSouLzz/PAL-AI",
@@ -46,12 +46,20 @@
   "tts_volume": 100,
   "map_overlay": {
     "enabled": true,
-    "width": 1180,
-    "height": 760,
+    "width": 1280,
+    "height": 800,
     "opacity": 0.98,
     "always_on_top": true,
     "auto_open_on_new_pin": true,
-    "show_grid": true
+    "show_grid": true,
+    "grid_step": 250,
+    "pin_radius": 12,
+    "world_bounds": {
+      "min_x": -1954.1,
+      "max_x": 1200.3,
+      "min_y": -1908.7,
+      "max_y": 1245.8
+    }
   },
   "gaming_performance": {
     "enabled": true,
