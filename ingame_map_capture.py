@@ -63,7 +63,6 @@ def apply_ingame_map_capture(pal_ai):
         self.ingame_capture_listener.start()
 
     def capture_monitor_image(self):
-        # Hide PAL-AI windows briefly so the screenshot contains the game map, not PAL-AI.
         hidden = []
         try:
             if self.root.state() != "withdrawn":
@@ -87,6 +86,14 @@ def apply_ingame_map_capture(pal_ai):
             shot = sct.grab(mon)
             image = Image.frombytes("RGB", shot.size, shot.rgb)
 
+        # Persist the real in-game map capture so the PAL-AI Map button can use
+        # the actual Palworld map instead of the old stylized blob drawing.
+        try:
+            ref = pal_ai.DATA_DIR / "ingame_map_reference.png"
+            image.save(ref, format="PNG")
+        except Exception:
+            pass
+
         for win in hidden:
             try:
                 win.deiconify()
@@ -104,7 +111,6 @@ def apply_ingame_map_capture(pal_ai):
         return float(x), float(y)
 
     def compute_world_from_pixel(capture, px, py):
-        # Axis-aligned linear transform. Two reference points must differ in both axes.
         dxp = float(capture.get("px2", 0)) - float(capture.get("px1", 0))
         dyp = float(capture.get("py2", 0)) - float(capture.get("py1", 0))
         if abs(dxp) < 5 or abs(dyp) < 5:
@@ -156,7 +162,6 @@ def apply_ingame_map_capture(pal_ai):
         overlay.bind("<Escape>", cancel)
 
         def click(event):
-            # Convert displayed pixel back to source screenshot pixel.
             px = (event.x - ox) / scale
             py = (event.y - oy) / scale
             if not (0 <= px <= iw and 0 <= py <= ih):
