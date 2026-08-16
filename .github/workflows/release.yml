@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version to build, e.g. 0.9.3"
+        description: "Version to build, e.g. 0.9.4"
         required: true
-        default: "0.9.3"
+        default: "0.9.4"
 
 permissions:
   contents: write
@@ -41,12 +41,12 @@ jobs:
           VERSION="${{ steps.version.outputs.version }}"
           STAGE="PAL-AI-v${VERSION}"
           mkdir "$STAGE"
-          cp pal_ai.py launcher.py voice_fix.py map_overlay.py map_precision.py map_pin_fix.py map_calibration.py ingame_map_capture.py detailed_map_background.py performance_patch.py online_research.py activity_indicator.py updater.py requirements.txt install.bat start.bat debug_start.bat apply_update.bat VERSION README.md TROUBLESHOOTING.md config.example.json "$STAGE"/
+          cp pal_ai.py launcher.py voice_fix.py map_overlay.py map_precision.py map_pin_fix.py map_calibration.py ingame_map_capture.py detailed_map_background.py server_sync.py performance_patch.py online_research.py activity_indicator.py updater.py requirements.txt install.bat start.bat debug_start.bat apply_update.bat VERSION README.md TROUBLESHOOTING.md config.example.json "$STAGE"/
           mkdir -p "$STAGE/knowledge"
           cp knowledge/PALWORLD_NOTES.md "$STAGE/knowledge/"
           cp config.example.json "$STAGE/config.json"
           printf '%s\n' "$VERSION" > "$STAGE/VERSION"
-          python -c 'import json,sys; p=sys.argv[1]; v=sys.argv[2]; c=json.load(open(p,encoding="utf-8")); c["app_version"]=v; c.setdefault("map_overlay",{}).setdefault("world_bounds",{}).update({"min_x":-1000.0,"max_x":1000.0,"min_y":-1000.0,"max_y":1000.0}); c["map_overlay"].setdefault("player_position", {"known":False,"x":0.0,"y":0.0}); c["map_overlay"].setdefault("ingame_capture", {"enabled":True,"hotkey":"f8","transform_known":False}); json.dump(c,open(p,"w",encoding="utf-8"),indent=2,ensure_ascii=False)' "$STAGE/config.json" "$VERSION"
+          python -c 'import json,sys; p=sys.argv[1]; v=sys.argv[2]; c=json.load(open(p,encoding="utf-8")); c["app_version"]=v; c.setdefault("map_overlay",{}).setdefault("world_bounds",{}).update({"min_x":-1000.0,"max_x":1000.0,"min_y":-1000.0,"max_y":1000.0}); c["map_overlay"].setdefault("player_position", {"known":False,"x":0.0,"y":0.0}); c["map_overlay"].setdefault("ingame_capture", {"enabled":True,"hotkey":"f8","transform_known":False}); c.setdefault("server_sync", {"enabled":False,"base_url":"http://127.0.0.1:8212/v1/api","username":"","password":"","player_name":"","player_id":"","interval_seconds":5}); json.dump(c,open(p,"w",encoding="utf-8"),indent=2,ensure_ascii=False)' "$STAGE/config.json" "$VERSION"
           zip -r "PAL-AI-v${VERSION}.zip" "$STAGE"
           sha256sum "PAL-AI-v${VERSION}.zip" > "PAL-AI-v${VERSION}.zip.sha256"
 
